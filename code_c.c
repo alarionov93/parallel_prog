@@ -1,9 +1,9 @@
-
 #include "stdafx.h"
 #include <iostream>
 #include <stdlib.h>
 #include <windows.h>
 #include <stdio.h>
+#include "omp.h"
 #include "time.h"
 
 using namespace std;
@@ -15,6 +15,7 @@ double f(double x) {
 int main(){
 	SetConsoleOutputCP(1251);
 	SetConsoleCP(1251);
+
 	double a;
 	double b;
 	cout << "ввод а и b через пробел:";
@@ -25,6 +26,7 @@ int main(){
 	double h = (b-a) / n;
 	double s = 0;
 	double start = ((double)clock()) / CLOCKS_PER_SEC;
+	#pragma omp parallel for reduction(+:s)
 	for (int i = 0; i<n; i++){
 		s += f(a + i*h)*h;
 	}
